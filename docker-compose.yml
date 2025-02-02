@@ -1,0 +1,12 @@
+services:
+
+  app:
+    build: ./proxy
+    container_name: proxy
+    ports:
+      - "8080:8080"
+    networks:
+        - mylocal
+networks:
+    mylocal:
+        driver: bridge

@@ -1,0 +1,142 @@
+basePath: /
+definitions:
+  model.Address:
+    properties:
+      city:
+        type: string
+      house:
+        type: string
+      lat:
+        type: string
+      lon:
+        type: string
+      street:
+        type: string
+    type: object
+  model.RequestAddressGeocode:
+    properties:
+      lat:
+        type: string
+      lon:
+        type: string
+    type: object
+  model.RequestAddressSearch:
+    properties:
+      query:
+        type: string
+    type: object
+  model.ResponseAddress:
+    properties:
+      addresses:
+        items:
+          $ref: '#/definitions/model.Address'
+        type: array
+    type: object
+  model.User:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: GeoService from KataAcademy
+  title: Swagger GeoService
+  version: "1.0"
+paths:
+  /api/address/geocode:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Search query
+        in: body
+        name: query
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestAddressGeocode'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseAddress'
+      security:
+      - ApiKeyAuth: []
+      summary: Search address by coordinates
+      tags:
+      - address
+  /api/address/search:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Search query
+        in: body
+        name: query
+        required: true
+        schema:
+          $ref: '#/definitions/model.RequestAddressSearch'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.ResponseAddress'
+      security:
+      - ApiKeyAuth: []
+      summary: Search address by query
+      tags:
+      - address
+  /api/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Search query
+        in: body
+        name: query
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Login users
+      tags:
+      - authorization
+  /api/register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Search query
+        in: body
+        name: query
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.User'
+      summary: Register users
+      tags:
+      - authorization
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
